@@ -1,0 +1,33 @@
+html {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body {
+    padding-top: 10vh;
+    width: 50%;
+}
+
+.results-fieldset {
+    display: flex;
+    flex-direction: column;
+}
+
+.results-legend {
+    font-size: 20px;
+}
+
+.form-submit {
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.set-1-block, .set-2-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1.5vh;
+}
