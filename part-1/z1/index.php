@@ -1,3 +1,5 @@
+<?php ?>
+
 <html lang="ru">
 
 <head>

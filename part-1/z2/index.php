@@ -1,23 +1,5 @@
 <?php
 
-require_once("db_singleton.php");
-
-//$deleteID = $_POST['deleteID'];
-
-$host = 'localhost';
-$db_name = 'z2_db';
-$db_login = 'root';
-$db_pass = 'root';
-$charset = 'utf8';
-
-$query = "DELETE FROM info_long WHERE id=1";
-
-$DB = db_singleton::getInstance();
-
-//$DB->initializeConnection($host, $db_name, $db_login, $db_pass, $charset);
-
-//$stmt = $DB->__call('query', [$query]);
-
 ?>
 
 <html lang="ru">
@@ -29,7 +11,7 @@ $DB = db_singleton::getInstance();
 
 <body>
 
-<form method="post" action="result.php">
+<form enctype="multipart/form-data" method="post" action="add.php">
 
     <div class="row1">
         <label class="file-1-label" for="file-1-input">Файл 1:</label>

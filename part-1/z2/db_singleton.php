@@ -5,7 +5,9 @@ class db_singleton
     private static $instance;
     private $db_instance;
 
-    protected function __construct() {}
+    protected function __construct()
+    {
+    }
 
     protected function __clone()
     {
