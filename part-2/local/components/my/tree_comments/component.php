@@ -7,13 +7,29 @@ use \Bitrix\Main;
 global $USER;
 global $APPLICATION;
 
-/**
- * @var $arParams;
- */
+if (CModule::IncludeModule("iblock")) {
 
-    //TODO: С помощью идентификатора и типа из параметров, достать идентификатор комментария и его contents
-    // И затем передать в $arResult, чтобы потом отобразить его в шаблоне
+    $arResult['jij'] = $APPLICATION->GetPageProperty("is_static");
 
-$arResult['ID'] = $arParams['ID'];
+    if ($APPLICATION->GetPageProperty("is_static")) {
 
-$this->IncludeComponentTemplate();
+        $IBLOCK_ID = 5;
+
+        $filter = ['IBLOCK_ID' => $IBLOCK_ID];
+        $select = ['*', 'PROPERTY_PARENT_ID'];
+
+        $resObjects = CIBlockElement::getList([], $filter, false, ["nPageSize"=>50], $select);
+
+        $accumulator = [];
+
+        while ($resItem = $resObjects->GetNextElement()) {
+            array_push($accumulator, $resItem->GetFields());
+        }
+
+        $arResult["COMMENTS"] = $accumulator;
+    }
+
+    $this->IncludeComponentTemplate();
+} else {
+    echo "Ошибка при подключении модуля инфоблоков";
+}
