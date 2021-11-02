@@ -10,23 +10,24 @@ var_dump($arResult["COMMENTS"]);
 
 ?><hr><?php
 
-// Как-то парсить комментарии и ответы на них по массивам?
+function renderBranch($comment, $arResult): string
+{
 
-foreach ($arResult["COMMENTS"] as $item) {
-    if ($item["PROPERTY_PARENT_ID_VALUE"] == 0) {
-    ?>
-    <fieldset class="root-comment">
-        <legend><?php echo $item["NAME"]; ?></legend>
-        <p><?php echo $item["DETAIL_TEXT"]; ?></p>
-        <?php
-        foreach ($arResult["COMMENTS"] as $child) {
-            if ($child["PROPERTY_PARENT_ID_VALUE"] == $item["ID"]) {
-            ?>
-                <fieldset class="child_comment">
-                    <legend><?php echo $child["NAME"]; ?></legend>
-                    <p><?php echo $child["DETAIL_TEXT"]; ?></p>
-                </fieldset>
-        <?php }} ?>
-    </fieldset>
-    <?php } ?>
-<?php } ?>
+    $rendered = "";
+    foreach ($arResult["COMMENTS"] as $item) {
+        if ($item["PROPERTY_PARENT_ID_VALUE"] == $comment["ID"]) {
+            $rendered .= renderBranch($item, $arResult);
+        }
+    }
+
+    return  '<fieldset class="child_comment">
+                    <legend>'.$comment["NAME"].'</legend>
+                    <p>'.$comment["DETAIL_TEXT"].'</p>
+                    '.$rendered.'
+                </fieldset>';
+
+}
+
+echo renderBranch(['ID' => '0', 'NAME' => "Комментарии"], $arResult);
+//(array_map(fn($item) => renderBranch($item, $arResult), array_filter($arResult["COMMENTS"], fn($item) => ($item["PROPERTY_PARENT_ID_VALUE"] == $comment["ID"]))))
+?>
