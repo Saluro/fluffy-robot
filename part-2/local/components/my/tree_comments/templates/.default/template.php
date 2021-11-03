@@ -6,7 +6,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
  * @var array $arResult
  */
 
-var_dump($arResult["COMMENTS"]);
+//var_dump($arResult["COMMENTS"]);
 
 ?><hr><?php
 
@@ -21,7 +21,7 @@ function renderBranch($comment, $arResult): string
     }
 
     return  '<fieldset class="child_comment">
-                    <legend>'.$comment["NAME"].'</legend>
+                    <legend>'.$comment["NAME"]." ".$comment["DATE_ACTIVE_FROM"].'</legend>
                     <p>'.$comment["DETAIL_TEXT"].'</p>
                     '.$rendered.'
                 </fieldset>';

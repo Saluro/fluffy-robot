@@ -9,25 +9,37 @@ global $APPLICATION;
 
 if (CModule::IncludeModule("iblock")) {
 
-    $arResult['jij'] = $APPLICATION->GetPageProperty("is_static");
+    // ORDER
 
-    if ($APPLICATION->GetPageProperty("is_static")) {
+    $IBLOCK_ID = 5;
 
-        $IBLOCK_ID = 5;
+    if ($arParams["TARGET_TYPE"]) {
 
-        $filter = ['IBLOCK_ID' => $IBLOCK_ID];
-        $select = ['*', 'PROPERTY_PARENT_ID'];
+        $filter = [
+            'IBLOCK_ID' => $IBLOCK_ID,
+            '=PROPERTY_TARGET_ID' => $APPLICATION->GetCurPage()
+        ];
 
-        $resObjects = CIBlockElement::getList([], $filter, false, ["nPageSize"=>50], $select);
+    } elseif (!$arParams["TARGET_TYPE"]) {
 
-        $accumulator = [];
+        $filter = [
+            'IBLOCK_ID' => $IBLOCK_ID,
+            '=PROPERTY_TARGET_ID' => $arParams["TARGET"]
+        ];
 
-        while ($resItem = $resObjects->GetNextElement()) {
-            array_push($accumulator, $resItem->GetFields());
-        }
-
-        $arResult["COMMENTS"] = $accumulator;
     }
+
+    $select = ['*', 'PROPERTY_PARENT_ID'];
+
+    $resObjects = CIBlockElement::getList([], $filter, false, ["nPageSize"=>50], $select);
+
+    $accumulator = [];
+
+    while ($resItem = $resObjects->GetNextElement()) {
+        array_push($accumulator, $resItem->GetFields());
+    }
+
+    $arResult["COMMENTS"] = $accumulator;
 
     $this->IncludeComponentTemplate();
 } else {
