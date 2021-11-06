@@ -13,20 +13,23 @@ if (isset($_POST["form-submit"])) {
         $db_pass = 'root';
         $charset = 'utf8';
 
+        $sep1 = $_POST['sep-1'];
+        $sep2 = $_POST['sep-2'];
+
         $file1 = fopen($_FILES['file-1']['tmp_name'], "r");
         $file2 = fopen($_FILES['file-2']['tmp_name'], "r");
 
-        $file1_iterator = fgetcsv($file1, 1000, ",");
-        $file2_iterator = fgetcsv($file2, 1000, ",");
+        $file1_iterator = fgetcsv($file1, 1000, $sep1);
+        $file2_iterator = fgetcsv($file2, 1000, $sep2);
 
         $file1_data_array = [];
         $file2_data_array = [];
 
-        while ($data = fgetcsv($file1, 1000, ",")) {
+        while ($data = fgetcsv($file1, 1000, $sep1)) {
             array_push($file1_data_array, $data);
         }
 
-        while ($data = fgetcsv($file2, 1000, ",")) {
+        while ($data = fgetcsv($file2, 1000, $sep2)) {
             array_push($file2_data_array, $data);
         }
 
@@ -38,7 +41,7 @@ if (isset($_POST["form-submit"])) {
         $DB->initializeConnection($host, $db_name, $db_login, $db_pass, $charset);
 
         foreach ($file1_data_array as $item) {
-            $itemData = explode(";", $item[0]);
+            $itemData = explode($sep1, $item[0]);
 
             $query = "INSERT INTO info_long (r_ip, r_date, r_time, r_url_from, r_url_to) VALUES ('{$itemData[0]}', '{$itemData[1]}', '{$itemData[2]}', '{$itemData[3]}', '{$itemData[4]}')";
 
@@ -46,7 +49,7 @@ if (isset($_POST["form-submit"])) {
         }
 
         foreach ($file2_data_array as $item) {
-            $itemData = explode(";", $item[0]);
+            $itemData = explode($sep2, $item[0]);
 
             $query = "INSERT INTO info_short (h_ip, h_browser, h_os) VALUES ('{$itemData[0]}', '{$itemData[1]}', '{$itemData[2]}')";
 
@@ -60,7 +63,7 @@ if (isset($_POST["form-submit"])) {
 
         <head>
             <link rel="stylesheet" type="text/css" href="styles.css">
-            <title>Задание 1</title>
+            <title>Задание 2</title>
         </head>
 
         <body>
