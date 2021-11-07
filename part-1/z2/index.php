@@ -34,6 +34,8 @@
 
     <input class="form-submit" name="form-submit" type="submit" value="Рассчитать">
 </form>
+<hr>
+<h2>*Дату в csv Файлах вводить в формате YYYY.MM.DD</h2>
 
 </body>
 

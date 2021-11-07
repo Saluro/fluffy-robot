@@ -26,10 +26,14 @@ if (isset($_POST["form-submit"])) {
         $file2_data_array = [];
 
         while ($data = fgetcsv($file1, 1000, $sep1)) {
+//            var_dump($data);
+//            echo "<br>";
             array_push($file1_data_array, $data);
         }
 
         while ($data = fgetcsv($file2, 1000, $sep2)) {
+//            var_dump($data);
+//            echo "<br>";
             array_push($file2_data_array, $data);
         }
 
@@ -41,17 +45,19 @@ if (isset($_POST["form-submit"])) {
         $DB->initializeConnection($host, $db_name, $db_login, $db_pass, $charset);
 
         foreach ($file1_data_array as $item) {
-            $itemData = explode($sep1, $item[0]);
 
-            $query = "INSERT INTO info_long (r_ip, r_date, r_time, r_url_from, r_url_to) VALUES ('{$itemData[0]}', '{$itemData[1]}', '{$itemData[2]}', '{$itemData[3]}', '{$itemData[4]}')";
+            $query = "INSERT INTO info_long (r_ip, r_date, r_time, r_url_from, r_url_to) VALUES ('{$item[0]}', '{$item[1]}', '{$item[2]}', '{$item[3]}', '{$item[4]}')";
+
+            //echo $query."<br>";
 
             $stmt = $DB->__call('query', [$query]);
         }
 
         foreach ($file2_data_array as $item) {
-            $itemData = explode($sep2, $item[0]);
 
-            $query = "INSERT INTO info_short (h_ip, h_browser, h_os) VALUES ('{$itemData[0]}', '{$itemData[1]}', '{$itemData[2]}')";
+            $query = "INSERT INTO info_short (h_ip, h_browser, h_os) VALUES ('{$item[0]}', '{$item[1]}', '{$item[2]}')";
+
+            //echo $query."<br>";
 
             $stmt = $DB->__call('query', [$query]);
         }
