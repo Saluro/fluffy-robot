@@ -81,7 +81,6 @@ if (CModule::IncludeModule("iblock")) {
     $arResult["COMMENTS"] = $accumulator;
 
 
-
     $this->IncludeComponentTemplate();
 } else {
     echo "Ошибка при подключении модуля инфоблоков";

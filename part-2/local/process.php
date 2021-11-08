@@ -2,7 +2,7 @@
 
 define("NO_KEEP_STATISTIC", true);
 define("NOT_CHECK_PERMISSIONS", true);
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
+require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
 use \Bitrix\Forum;
 use \Bitrix\Main;
@@ -16,7 +16,6 @@ $IBLOCK_ID = 5;
 
 function renderBranch($comment, $comments): string
 {
-
     $rendered = "";
     foreach ($comments as $item) {
         if ($item["PROPERTY_PARENT_ID_VALUE"] == $comment["ID"]) {
@@ -26,11 +25,11 @@ function renderBranch($comment, $comments): string
 
     $respond = $comment["ID"] == 1 ? "" : "<input class=\"respond-button\" id=\"{$comment["ID"]}\" type=\"button\" value=\"Ответить\">";
 
-    return  '<fieldset class="child_comment">
-                    <legend>'.$comment["NAME"]." ".$comment["DATE_ACTIVE_FROM"].'</legend>
-                    <p>'.$comment["DETAIL_TEXT"].'</p><br>
-                    '.$respond.'
-                    '.$rendered.'
+    return '<fieldset class="child_comment">
+                    <legend>' . $comment["NAME"] . " " . $comment["DATE_ACTIVE_FROM"] . '</legend>
+                    <p>' . $comment["DETAIL_TEXT"] . '</p><br>
+                    ' . $respond . '
+                    ' . $rendered . '
                 </fieldset>';
 }
 
@@ -66,14 +65,13 @@ if (!empty($errors)) {
     $data['message'] = 'Success!';
 
     if (CModule::IncludeModule("iblock")) {
-
         /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /*запись данных в инфоблок*/
         $arLoadProductArray = array(
             "IBLOCK_SECTION_ID" => false,
             "IBLOCK_ID" => $IBLOCK_ID,
             "NAME" => htmlspecialchars($_POST["USER_NAME"]),
-            "ACTIVE_FROM" => date( "d.m.Y H:i:s" ),
+            "ACTIVE_FROM" => date("d.m.Y H:i:s"),
             "ACTIVE" => "Y",
             "DETAIL_TEXT" => htmlspecialchars($_POST["CONTENT"]),
             "PROPERTY_VALUES" => [
@@ -105,11 +103,8 @@ if (!empty($errors)) {
         }
 
         $data["newhtml"] = renderBranch(["ID" => 1, "NAME" => "Комментарии"], $accumulator);
-
     }
-
 }
-
 
 
 echo json_encode($data);
